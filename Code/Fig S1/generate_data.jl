@@ -1,0 +1,50 @@
+# Figure S1
+
+using JLD2
+using Optim
+using LinearAlgebra
+
+first_case = false
+file_path = "Code/Fig S1/data1.jld2"
+
+if !first_case
+    file_path = "Code/Fig S1/data2.jld2"
+end
+
+function lamb(t, a, c, tau, beta, x0=1.0)
+    λ = a*(1.0 - exp(-t/tau)*(1.0 - beta*x0)) + c
+    if (λ < 0.0) return 0.0 end
+    return λ
+end
+
+function fisher(t, a, c, tau, beta, x0=1.0)
+    λ = lamb(t, a, c, tau, beta, x0)
+    if (λ == 0.0) return 0.0 end
+    if (tau == 0.0) return 0.0 end
+    return (a + c - λ)^2/(tau^2*λ)
+end
+
+a1 = 5.0
+a2 = 15.0
+c = 0.0
+beta = 0.0
+T1, T2 = 10.0, 15.0  # first case
+if !first_case
+    T1, T2 = 2.0, 20.0  # 2nd case
+end
+
+res = 1000
+tau_range = LinRange(0.1, 50.0, res)
+
+FI_values = zeros(2, res)
+for i=1:res
+    tau = tau_range[i]
+    F1 = fisher(T1, a1, c, tau, beta)
+    F2 = fisher(T2, a2, c, tau, beta)
+    FI_values[1, i] = F1
+    FI_values[2, i] = F2
+end
+
+save(file_path, 
+    "tau_range", [tau for tau in tau_range],
+    "FI", FI_values)
