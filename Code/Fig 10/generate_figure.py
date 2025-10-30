@@ -59,7 +59,10 @@ im1 = axes[0, 0].imshow(rmse_values_ff[:, :, 0].T, origin="lower", aspect="auto"
 # txt = axes[0, 0].text(0.05, 0.97, r"(a)", transform=axes[0, 0].transAxes, fontsize=12, fontweight='bold', va='top', ha='left', 
 #                       color='black', path_effects=[patheffects.withStroke(linewidth=1,foreground="white")])
 panel_label(axes[0, 0], "(a)", loc="tl", fontsize=12, pad=3)
-mask = rmse_values_ff[:, :, 0].T < 8.6
+
+chance_level = 8.6
+
+mask = rmse_values_ff[:, :, 0].T < chance_level
 for j in range(rmse_values_ff[:, :, 0].T.shape[1]-1):
     col1 = mask[:, j]
     col2 = mask[:, j+1]
@@ -88,7 +91,7 @@ im2 = axes[0, 1].imshow(rmse_values_ff[:, :, 1].T, origin="lower", aspect="auto"
 # txt = axes[0, 1].text(0.05, 0.97, r"(b)", transform=axes[0, 1].transAxes, fontsize=12, fontweight='bold', va='top', ha='left', 
 #                       color='black', path_effects=[patheffects.withStroke(linewidth=1,foreground="white")])
 panel_label(axes[0, 1], "(b)", loc="tl", fontsize=12, pad=3)
-mask = rmse_values_ff[:, :, 1].T < 8.5
+mask = rmse_values_ff[:, :, 1].T < chance_level
 for j in range(rmse_values_ff[:, :, 1].T.shape[1]-1):
     col1 = mask[:, j]
     col2 = mask[:, j+1]
@@ -118,7 +121,7 @@ im3 = axes[1, 0].imshow(rmse_values_re[:, :, 0].T, origin="lower", aspect="auto"
 # txt = axes[1, 0].text(0.05, 0.97, r"(c)", transform=axes[1, 0].transAxes, fontsize=12, fontweight='bold', va='top', ha='left', 
 #                       color='black', path_effects=[patheffects.withStroke(linewidth=1,foreground="white")])
 panel_label(axes[1, 0], "(c)", loc="tl", fontsize=12, pad=3)
-mask = rmse_values_re[:, :, 0].T < 8.6
+mask = rmse_values_re[:, :, 0].T < chance_level
 for j in range(rmse_values_re[:, :, 0].T.shape[1]-1):
     col1 = mask[:, j]
     col2 = mask[:, j+1]
@@ -146,7 +149,7 @@ im4 = axes[1, 1].imshow(rmse_values_re[:, :, 1].T, origin="lower", aspect="auto"
 # txt = axes[1, 1].text(0.05, 0.97, r"(d)", transform=axes[1, 1].transAxes, fontsize=12, fontweight='bold', va='top', ha='left', 
 #                       color='black', path_effects=[patheffects.withStroke(linewidth=1,foreground="white")])
 panel_label(axes[1, 1], "(d)", loc="tl", fontsize=12, pad=3)
-mask = rmse_values_re[:, :, 1].T < 8.6
+mask = rmse_values_re[:, :, 1].T < chance_level
 for j in range(rmse_values_re[:, :, 1].T.shape[1]-1):
     col1 = mask[:, j]
     col2 = mask[:, j+1]
@@ -200,7 +203,7 @@ cbar_ax1.set_yticks([2, 4, 6, 8, 10, 12])
 cbar_ax1.set_yticklabels(["2", "4", "6", "8", "10", "12"])
 # cbar_ax1.set_ylabel("RMSE (s)", labelpad=0.0)
 xmin, xmax = cbar_ax1.get_xlim()
-cbar_ax1.plot([xmin, xmax], [8.6, 8.6], color="red")
+cbar_ax1.plot([xmin, xmax], [chance_level, chance_level], color="red")
 cbar_ax1.tick_params(axis="y", which="both", length=3.0, pad=2)
 
 print(np.max(rmse_values_ff[:, :, 1]))
@@ -216,7 +219,7 @@ cbar_ax2.set_yticks([6, 8, 10, 12])
 cbar_ax2.set_yticklabels(["6", "8", "10", "12"])
 cbar_ax2.set_ylabel("RMSE (s)", labelpad=0.0)
 xmin, xmax = cbar_ax2.get_xlim()
-cbar_ax2.plot([xmin, xmax], [8.6, 8.6], color="red")
+cbar_ax2.plot([xmin, xmax], [chance_level, chance_level], color="red")
 cbar_ax2.tick_params(axis="y", which="both", length=3.0, pad=2)
 xmin, xmax = cbar_ax1.get_xlim()
 
